@@ -27,6 +27,15 @@ jobs:
             const version = context.payload.pull_request.head.ref.split('-')[1]
             core.exportVariable('VERSION', version)
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: generate RBI
+        run: bundle exec parlour
+        # Once it is generated, the rbi file will be included in the built gem
+
       - name: Publish gem
         uses: dawidd6/action-publish-gem@v1
         with:
