@@ -607,8 +607,9 @@ module StreamChat
     def initialize(limit, remaining, reset); end
   end
 
-  class StreamResponse < Hash
+  class StreamResponse
     extend T::Sig
+    extend Forwardable
 
     sig { returns(StreamRateLimits) }
     attr_reader :rate_limit
@@ -619,8 +620,11 @@ module StreamChat
     sig { returns(StringKeyHash) }
     attr_reader :headers
 
-    sig { params(hash: T::Hash[T.untyped, T.untyped], response: Faraday::Response).void }
-    def initialize(hash, response); end
+    sig { returns(T::Hash[T.untyped, T.untyped]) }
+    attr_reader :body
+
+    sig { params(body: T::Hash[T.untyped, T.untyped], response: Faraday::Response).void }
+    def initialize(body, response); end
   end
 
   sig { params(sort: T.nilable(T::Hash[String, Integer])).returns(SortArray) }
