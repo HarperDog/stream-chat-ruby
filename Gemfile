@@ -10,6 +10,7 @@ group :dev do
   gem 'pry-doc'
   gem 'rubocop', require: false
   gem 'sorbet'
+  gem 'parlour'
 end
 
 group :test do
