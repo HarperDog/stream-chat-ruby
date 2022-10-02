@@ -5,7 +5,7 @@ require 'stream-chat/stream_rate_limits'
 require 'stream-chat/types'
 
 module StreamChat
-  class StreamResponse < Hash
+  class StreamResponse
     extend T::Sig
 
     sig { returns(StreamRateLimits) }
@@ -17,10 +17,15 @@ module StreamChat
     sig { returns(StringKeyHash) }
     attr_reader :headers
 
-    sig { params(hash: T::Hash[T.untyped, T.untyped], response: Faraday::Response).void }
-    def initialize(hash, response)
-      super(nil)
-      merge!(hash)
+    sig { returns(T::Hash[T.untyped, T.untyped]) }
+    attr_reader :body
+
+    extend Forwardable
+    def_delegators :@body, :[], :[]=, :delete, :include?, :has_key?
+
+    sig { params(body: T::Hash[T.untyped, T.untyped], response: Faraday::Response).void }
+    def initialize(body, response)
+      @body = body
 
       if response.headers.key?('X-Ratelimit-Limit')
         @rate_limit = T.let(StreamRateLimits.new(
