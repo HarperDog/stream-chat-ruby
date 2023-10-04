@@ -15,6 +15,7 @@ group :dev do
   gem 'simplecov', '~> 0.21.2'
   gem 'simplecov-console', '~> 0.9.1'
   gem 'sorbet', '~> 0.5.10539'
+  gem 'parlour'
 end
 
 group :test do

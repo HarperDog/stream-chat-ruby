@@ -1,0 +1,6 @@
+output_file:
+  rbi: rbi/stream-chat-ruby.rbi
+
+parser:
+  included_paths:
+    - lib
